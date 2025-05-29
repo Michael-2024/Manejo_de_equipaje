@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pasajero - Equipaje</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Consulta de Equipaje</h1>
+
+    <form id="pasajeroForm" class="search-form">
+      <div class="form-group">
+        <label for="documento">Número de documento:</label>
+        <input type="text" id="documento" required placeholder="Ingrese su número de documento">
+      </div>
+      <button type="submit" class="btn">Consultar</button>
+    </form>
+
+    <div id="loading" class="loading" style="display: none;">
+      <div class="spinner"></div>
+      <p>Buscando equipaje...</p>
+    </div>
+
+    <div id="resultados" class="results">
+      <!-- Resultados se mostrarán aquí -->
+    </div>
+
+    <button onclick="window.location.href='index.html'" class="btn back-btn">Volver</button>
+  </div>
+
+  <script src="js/pasajero.js"></script>
+</body>
+</html>

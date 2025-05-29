@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Operario - Control de Equipaje</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Equipajes</h1>
+
+    <h2>Agregar nuevo equipaje</h2>
+    <form id="form-equipaje" class="search-form">
+      <div class="form-group">
+        <label>Documento del pasajero:</label>
+        <input type="text" id="doc-pasajero" required>
+      </div>
+      <div class="form-group">
+        <label>Descripción:</label>
+        <input type="text" id="desc" required>
+      </div>
+      <div class="form-group">
+        <label>Peso (kg):</label>
+        <input type="number" step="0.01" id="peso" required>
+      </div>
+      <div class="form-group">
+        <label>ID del vuelo:</label>
+        <input type="number" id="vuelo-id" required>
+      </div>
+      <div class="form-group">
+        <label>ID tipo equipaje:</label>
+        <input type="number" id="tipo-id" required>
+      </div>
+      <button type="submit" class="btn">Agregar equipaje</button>
+    </form>
+    <hr>
+
+    <h2>Lista de Equipajes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Pasajero</th>
+          <th>Descripción</th>
+          <th>Peso (kg)</th>
+          <th>Estado</th>
+          <th>Cambiar Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-equipaje"></tbody>
+    </table>
+  </div>
+
+  <script src="js/operario.js"></script>
+</body>
+</html>
