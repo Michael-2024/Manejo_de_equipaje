@@ -1,28 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Elementos del DOM
-    const formulario = document.getElementById('pasajeroForm'); // Cambié a 'pasajeroForm' como en el HTML ajustado
+    const formulario = document.getElementById('pasajeroForm');
     const loading = document.getElementById('loading');
     const resultados = document.getElementById('resultados');
 
-    // Manejador del evento submit
     formulario.addEventListener('submit', function (e) {
         e.preventDefault();
         const documento = document.getElementById('documento').value.trim();
 
-        // Validación básica
         if (!documento) {
             mostrarError('Por favor, ingrese un número de documento.');
             return;
         }
 
-        // Mostrar indicador de carga
         mostrarCarga();
-
-        // Realizar la consulta al servidor
         consultarEquipaje(documento);
     });
 
-    // Función para consultar el equipaje
     function consultarEquipaje(documento) {
         fetch(`/api/pasajero-equipaje?documento=${encodeURIComponent(documento)}`)
             .then(manejarRespuesta)
@@ -31,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .finally(ocultarCarga);
     }
 
-    // Función para manejar la respuesta del servidor
     function manejarRespuesta(response) {
         if (!response.ok) {
             return response.json().then((err) => {
@@ -39,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }).catch(() => {
                 throw new Error(
                     response.status === 404
-                        ? 'No se encontró pasajero con ese documento.'
+                        ? 'No se encontró equipaje con ese documento.'
                         : `Error ${response.status}: ${response.statusText}`
                 );
             });
@@ -47,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return response.json();
     }
 
-    // Función para mostrar los resultados
     function mostrarEquipaje(data) {
         resultados.innerHTML = '';
 
@@ -56,43 +47,54 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        data.forEach((equipaje) => {
-            const div = document.createElement('div');
-            div.className = 'equipaje-item';
-            div.innerHTML = `
-                <p><strong>ID Equipaje:</strong> ${equipaje.equipajeid || 'No disponible'}</p>
-                <p><strong>Última Ubicación:</strong> ${equipaje.ubicacion || 'Sin datos'}</p>
-                <p><strong>Fecha/Hora:</strong> ${equipaje.fechahora ? new Date(equipaje.fechahora).toLocaleString() : 'Sin datos'}</p>
-                <p><strong>Estado:</strong> ${equipaje.estado || 'Desconocido'}</p>
-                <p><strong>Observaciones:</strong> ${equipaje.observaciones || 'Ninguna'}</p>
-            `;
-            resultados.appendChild(div);
-        });
+        const tabla = document.createElement('table');
+        tabla.innerHTML = `
+            <thead>
+                <tr>
+                    <th>ID Equipaje</th>
+                    <th>Descripción</th>
+                    <th>Peso</th>
+                    <th>Estado</th>
+                    <th>Última Ubicación</th>
+                    <th>Fecha/Hora</th>
+                    <th>Observaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.map(eq => `
+                    <tr>
+                        <td>${eq.equipajeid || 'N/A'}</td>
+                        <td>${eq.descripcion || 'Sin descripción'}</td>
+                        <td>${eq.peso || 'N/A'} kg</td>
+                        <td>${eq.estado || 'Desconocido'}</td>
+                        <td>${eq.ubicacion || 'Sin datos'}</td>
+                        <td>${eq.fechahora ? new Date(eq.fechahora).toLocaleString() : 'Sin datos'}</td>
+                        <td>${eq.observaciones || 'Ninguna'}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        `;
+        resultados.appendChild(tabla);
     }
 
-    // Función para manejar errores
     function manejarError(error) {
         console.error('Error:', error);
         mostrarError(error.message || 'Ocurrió un error inesperado.');
     }
 
-    // Función para mostrar el indicador de carga
     function mostrarCarga() {
         loading.style.display = 'block';
         resultados.innerHTML = '';
     }
 
-    // Función para ocultar el indicador de carga
     function ocultarCarga() {
         loading.style.display = 'none';
     }
 
-    // Función para mostrar mensajes de error
     function mostrarError(mensaje) {
         resultados.innerHTML = `<div class="results error">${mensaje}</div>`;
     }
 
-    // Función para mostrar mensajes informativos
     function mostrarMensaje(mensaje, tipo) {
         resultados.innerHTML = `<div class="results ${tipo}">${mensaje}</div>`;
     }
