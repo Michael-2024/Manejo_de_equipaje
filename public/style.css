@@ -66,6 +66,15 @@ input[type="number"] {
   background-color: #2980b9;
 }
 
+.btn-volver {
+  background-color: #95a5a6; /* Color gris claro para diferenciar */
+  margin-bottom: 20px; /* Espacio debajo del botón */
+}
+
+.btn-volver:hover {
+  background-color: #7f8c8d; /* Gris más oscuro en hover */
+}
+
 .loading {
   text-align: center;
   margin: 20px 0;

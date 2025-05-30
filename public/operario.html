@@ -9,32 +9,35 @@
   <div class="container">
     <h1>Gestión de Equipajes</h1>
 
+    <!-- Formulario para agregar equipaje -->
     <h2>Agregar nuevo equipaje</h2>
     <form id="form-equipaje" class="search-form">
       <div class="form-group">
-        <label>Documento del pasajero:</label>
-        <input type="text" id="doc-pasajero" required>
+        <label for="doc-pasajero">Documento del pasajero:</label>
+        <input type="text" id="doc-pasajero" required placeholder="Ej. 12345678">
       </div>
       <div class="form-group">
-        <label>Descripción:</label>
-        <input type="text" id="desc" required>
+        <label for="desc">Descripción:</label>
+        <input type="text" id="desc" required placeholder="Ej. Maleta azul">
       </div>
       <div class="form-group">
-        <label>Peso (kg):</label>
-        <input type="number" step="0.01" id="peso" required>
+        <label for="peso">Peso (kg):</label>
+        <input type="number" step="0.01" min="0" id="peso" required placeholder="Ej. 23.5">
       </div>
       <div class="form-group">
-        <label>ID del vuelo:</label>
-        <input type="number" id="vuelo-id" required>
+        <label for="vuelo-id">Número de vuelo:</label>
+        <input type="text" id="vuelo-id" required placeholder="Ej. AV123">
       </div>
       <div class="form-group">
-        <label>ID tipo equipaje:</label>
-        <input type="number" id="tipo-id" required>
+        <label for="tipo-id">ID tipo equipaje:</label>
+        <input type="number" min="0" id="tipo-id" required placeholder="Ej. 1">
       </div>
       <button type="submit" class="btn">Agregar equipaje</button>
     </form>
+
     <hr>
 
+    <!-- Tabla de equipajes -->
     <h2>Lista de Equipajes</h2>
     <table>
       <thead>
@@ -47,10 +50,13 @@
           <th>Acción</th>
         </tr>
       </thead>
-      <tbody id="tabla-equipaje"></tbody>
+      <tbody id="tabla-equipaje">
+        <!-- Las filas se agregarán dinámicamente aquí -->
+      </tbody>
     </table>
   </div>
 
+  <!-- Script con la lógica JS -->
   <script src="js/operario.js"></script>
 </body>
 </html>
